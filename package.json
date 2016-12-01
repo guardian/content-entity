@@ -1,6 +1,6 @@
 {
   "name": "guardian-contententity",
-  "version": "0.1",
+  "version": "0.1.1",
   "description": "Content Entity JavaScript, automatically generated from the Thrift definition.",
   "repository": "https://github.com/guardian/content-entity",
   "main": "js/main.js",
