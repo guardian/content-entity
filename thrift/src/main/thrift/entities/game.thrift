@@ -8,5 +8,5 @@ struct Game {
   3: required list<string> platforms
   4: optional shared.Price price
   5: optional i32 pegiRating
-  6: optional string genre
+  6: required list<string> genre
 }
