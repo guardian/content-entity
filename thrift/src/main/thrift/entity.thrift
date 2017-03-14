@@ -4,6 +4,8 @@ include "entities/person.thrift"
 include "entities/film.thrift"
 include "entities/game.thrift"
 include "entities/restaurant.thrift"
+include "entities/place.thrift"
+include "entities/organisation.thrift"
 
 enum EntityType {
   PERSON = 0
@@ -22,4 +24,6 @@ struct Entity {
   5: optional film.Film film
   6: optional game.Game game
   7: optional restaurant.Restaurant restaurant
+  8: optional place.Place place
+  9: optional organisation.Organisation organisation
 }
