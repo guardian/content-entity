@@ -12,6 +12,8 @@ enum EntityType {
   FILM = 1
   GAME = 2
   RESTAURANT = 3
+  PLACE = 4
+  ORGANISATION = 5
 }
 
 // A container for an entity
