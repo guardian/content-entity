@@ -10,6 +10,7 @@ import com.gu.contententity.thrift.entity.restaurant.Restaurant
 import org.scalacheck.{Arbitrary, Gen}
 
 package object thrift {
+    
     import Arbitrary.arbitrary
 
     implicit val arbEntityType: Arbitrary[EntityType] = Arbitrary {
