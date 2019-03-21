@@ -66,6 +66,8 @@ lazy val scala = (project in file("scala"))
     includeFilter in unmanagedResources := "*.thrift",
     unmanagedResourceDirectories in Compile += baseDirectory.value / "../thrift/src/main/thrift",
     managedSourceDirectories in Compile += (scroogeThriftOutputFolder in Compile).value,
+
+    libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.14.0" % "test"
   )
 
 lazy val thrift = (project in file("thrift"))
