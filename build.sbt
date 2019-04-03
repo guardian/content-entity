@@ -1,13 +1,10 @@
 import sbtrelease._
-import com.twitter.scrooge.ScroogeSBT.autoImport._
-
 import ReleaseStateTransformations._
-
-Sonatype.sonatypeSettings
 
 val commonSettings = Seq(
   organization := "com.gu",
   scalaVersion := "2.12.8",
+  crossScalaVersions := Seq("2.11.12", "2.12.8"),
   scmInfo := Some(ScmInfo(url("https://github.com/guardian/content-entity"),
                           "scm:git:git@github.com:guardian/content-entity.git")),
 
@@ -51,21 +48,21 @@ val commonSettings = Seq(
 )
 
 lazy val root = (project in file("."))
-  .aggregate(thrift, scala)
+  .aggregate(thrift, scalaClasses)
   .settings(commonSettings)
   .settings(
     publishArtifact := false
   )
 
-lazy val scala = (project in file("scala"))
+lazy val scalaClasses = (project in file("scala"))
   .settings(commonSettings)
   .settings(
     name := "content-entity-model",
     description := "Scala library built from Content-entity thrift definition",
 
     scroogeThriftSourceFolder in Compile := baseDirectory.value / "../thrift/src/main/thrift",
-    includeFilter in unmanagedResources := "*.thrift",
-    unmanagedResourceDirectories in Compile += baseDirectory.value / "../thrift/src/main/thrift",
+    scroogeThriftOutputFolder in Compile := sourceManaged.value,
+    scroogePublishThrift in Compile := true,
     managedSourceDirectories in Compile += (scroogeThriftOutputFolder in Compile).value,
 
     libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.14.0" % "test"
@@ -73,6 +70,7 @@ lazy val scala = (project in file("scala"))
 
 lazy val thrift = (project in file("thrift"))
   .settings(commonSettings)
+  .disablePlugins(ScroogeSBT)
   .settings(
     name := "content-entity-thrift",
     description := "Content entity model Thrift files",
@@ -81,20 +79,3 @@ lazy val thrift = (project in file("thrift"))
     publishArtifact in packageSrc := false,
     unmanagedResourceDirectories in Compile += { baseDirectory.value / "src/main/thrift" }
   )
-
-// // settings for the thrift plugin, both default and custom
-// thriftSettings ++ inConfig(Thrift) {
-
-//   // add the node option to the js generator, as that is the style of
-//   // code that we want to generate
-
-//   Seq(
-//     thriftSourceDir := file("thrift/src/main/thrift"),
-//     thriftJsEnabled := true,
-//     thriftJavaEnabled := false,
-//     thriftJsOptions := Seq("node"),
-//     thriftOutputDir <<= baseDirectory / "generated",
-//     thriftJsOutputDir <<= thriftOutputDir
-//   )
-// }
-
