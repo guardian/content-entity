@@ -30,6 +30,7 @@ val commonSettings = Seq(
   ),
 
   publishTo := sonatypePublishTo.value,
+  publishConfiguration := publishConfiguration.value.withOverwrite(true),
   releasePublishArtifactsAction := PgpKeys.publishSigned.value,
   releaseProcess := Seq[ReleaseStep](
     checkSnapshotDependencies,
