@@ -32,6 +32,7 @@ val commonSettings = Seq(
     "com.twitter" %% "scrooge-core" % "19.3.0"
   ),
 
+  publishTo := sonatypePublishTo.value,
   releasePublishArtifactsAction := PgpKeys.publishSigned.value,
   releaseProcess := Seq[ReleaseStep](
     checkSnapshotDependencies,
