@@ -1,7 +1,5 @@
-import com.github.bigtoast.sbtthrift.ThriftPlugin._
-import com.twitter.scrooge.ScroogeSBT
-
 import sbtrelease._
+import com.twitter.scrooge.ScroogeSBT.autoImport._
 
 import ReleaseStateTransformations._
 
@@ -9,7 +7,7 @@ Sonatype.sonatypeSettings
 
 val commonSettings = Seq(
   organization := "com.gu",
-  scalaVersion := "2.11.8",
+  scalaVersion := "2.12.8",
   scmInfo := Some(ScmInfo(url("https://github.com/guardian/content-entity"),
                           "scm:git:git@github.com:guardian/content-entity.git")),
 
@@ -29,6 +27,10 @@ val commonSettings = Seq(
   </developers>
   ),
   licenses := Seq("Apache V2" -> url("http://www.apache.org/licenses/LICENSE-2.0.html")),
+  libraryDependencies ++= Seq(
+    "org.apache.thrift" % "libthrift" % "0.10.0",
+    "com.twitter" %% "scrooge-core" % "19.3.0"
+  ),
 
   releasePublishArtifactsAction := PgpKeys.publishSigned.value,
   releaseProcess := Seq[ReleaseStep](
@@ -42,7 +44,7 @@ val commonSettings = Seq(
     publishArtifacts,
     setNextVersion,
     commitNextVersion,
-    releaseStepCommand("sonatypeReleaseAll"),
+    releaseStepCommand("sonatypeRelease"),
     pushChanges
   )
 )
@@ -55,7 +57,6 @@ lazy val root = (project in file("."))
   )
 
 lazy val scala = (project in file("scala"))
-  .settings(ScroogeSBT.newSettings: _*)
   .settings(commonSettings)
   .settings(
     name := "content-entity-model",
@@ -65,10 +66,8 @@ lazy val scala = (project in file("scala"))
     includeFilter in unmanagedResources := "*.thrift",
     unmanagedResourceDirectories in Compile += baseDirectory.value / "../thrift/src/main/thrift",
     managedSourceDirectories in Compile += (scroogeThriftOutputFolder in Compile).value,
-    libraryDependencies ++= Seq(
-      "org.apache.thrift" % "libthrift" % "0.9.2",
-      "com.twitter" %% "scrooge-core" % "3.17.0"
-    )
+
+    libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.14.0" % "test"
   )
 
 lazy val thrift = (project in file("thrift"))
@@ -82,19 +81,19 @@ lazy val thrift = (project in file("thrift"))
     unmanagedResourceDirectories in Compile += { baseDirectory.value / "src/main/thrift" }
   )
 
-// settings for the thrift plugin, both default and custom
-thriftSettings ++ inConfig(Thrift) {
+// // settings for the thrift plugin, both default and custom
+// thriftSettings ++ inConfig(Thrift) {
 
-  // add the node option to the js generator, as that is the style of
-  // code that we want to generate
+//   // add the node option to the js generator, as that is the style of
+//   // code that we want to generate
 
-  Seq(
-    thriftSourceDir := file("thrift/src/main/thrift"),
-    thriftJsEnabled := true,
-    thriftJavaEnabled := false,
-    thriftJsOptions := Seq("node"),
-    thriftOutputDir <<= baseDirectory / "generated",
-    thriftJsOutputDir <<= thriftOutputDir
-  )
-}
+//   Seq(
+//     thriftSourceDir := file("thrift/src/main/thrift"),
+//     thriftJsEnabled := true,
+//     thriftJavaEnabled := false,
+//     thriftJsOptions := Seq("node"),
+//     thriftOutputDir <<= baseDirectory / "generated",
+//     thriftJsOutputDir <<= thriftOutputDir
+//   )
+// }
 
