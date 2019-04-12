@@ -24,11 +24,6 @@ val commonSettings = Seq(
   </developers>
   ),
   licenses := Seq("Apache V2" -> url("http://www.apache.org/licenses/LICENSE-2.0.html")),
-  libraryDependencies ++= Seq(
-    "org.apache.thrift" % "libthrift" % "0.10.0",
-    "com.twitter" %% "scrooge-core" % "19.3.0"
-  ),
-
   publishTo := sonatypePublishTo.value,
   publishConfiguration := publishConfiguration.value.withOverwrite(true),
   releasePublishArtifactsAction := PgpKeys.publishSigned.value,
@@ -66,7 +61,11 @@ lazy val scalaClasses = (project in file("scala"))
     scroogePublishThrift in Compile := true,
     managedSourceDirectories in Compile += (scroogeThriftOutputFolder in Compile).value,
 
-    libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.14.0" % "test"
+    libraryDependencies ++= Seq(
+      "org.apache.thrift" % "libthrift" % "0.10.0",
+      "com.twitter" %% "scrooge-core" % "19.3.0",
+      "org.scalacheck" %% "scalacheck" % "1.14.0" % "test"
+    )
   )
 
 lazy val thrift = (project in file("thrift"))
