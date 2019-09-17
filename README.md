@@ -6,20 +6,18 @@ languages.
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.gu/content-entity-model-thrift/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.gu/content-entity-model-thrift)
 
-## Thrift
-
-You need to have [french-thrift 0.9.3](https://github.com/guardian/french-thrift) installed locally.
-
 ## How to release
 
 ```
-$ sbt release
+$ sbt release cross
 ```
 
 This will release 2 artifacts to Maven Central:
 
-* `content-entity-model_2.11-$version.jar` contains the Thrift files and Scrooge-generated Scala 2.11 classes
+* `content-entity-model_2.13-$version.jar` contains the Thrift files and Scrooge-generated Scala 2.13 classes
 * `content-entity-model-thrift-$version.jar` contains only the Thrift files
+
+The package is cross-built against Scala 2.12 and 2.11
 
 You will need a PGP key and Sonatype credentials.  
 
