@@ -3,8 +3,8 @@ import ReleaseStateTransformations._
 
 val commonSettings = Seq(
   organization := "com.gu",
-  scalaVersion := "2.13.0",
-  crossScalaVersions := Seq("2.11.12", "2.12.10", "2.13.0"),
+  scalaVersion := "2.13.2",
+  crossScalaVersions := Seq("2.11.12", "2.12.11", "2.13.2"),
   scmInfo := Some(ScmInfo(url("https://github.com/guardian/content-entity"),
                           "scm:git:git@github.com:guardian/content-entity.git")),
 
@@ -62,8 +62,8 @@ lazy val scalaClasses = (project in file("scala"))
     managedSourceDirectories in Compile += (scroogeThriftOutputFolder in Compile).value,
 
     libraryDependencies ++= Seq(
-      "org.apache.thrift" % "libthrift" % "0.12.0",
-      "com.twitter" %% "scrooge-core" % "19.9.0",
+      "org.apache.thrift" % "libthrift" % "0.13.0",
+      "com.twitter" %% "scrooge-core" % "20.4.0",
       "org.scalacheck" %% "scalacheck" % "1.14.0" % "test"
     )
   )
