@@ -1,4 +1,5 @@
 namespace java com.gu.contententity.thrift.entity.restaurant
+#@namespace typescript _at_guardian.content_entity_model.restaurant
 
 include "../shared.thrift"
 

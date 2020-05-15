@@ -1,6 +1,7 @@
-resolvers += Resolver.bintrayRepo("twittercsl", "sbt-plugins")
+addSbtPlugin("com.twitter" % "scrooge-sbt-plugin" % "20.4.1")
 
-addSbtPlugin("com.twitter" % "scrooge-sbt-plugin" % "20.4.0")
+resolvers += "Guardian Platform Bintray" at "https://dl.bintray.com/guardian/platforms"
+addSbtPlugin("com.gu" % "sbt-scrooge-typescript" % "1.2.0")
 
 addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.13")
 

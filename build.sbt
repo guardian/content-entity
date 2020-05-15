@@ -5,6 +5,7 @@ val commonSettings = Seq(
   organization := "com.gu",
   scalaVersion := "2.13.2",
   crossScalaVersions := Seq("2.11.12", "2.12.11", "2.13.2"),
+  releaseCrossBuild := true,
   scmInfo := Some(ScmInfo(url("https://github.com/guardian/content-entity"),
                           "scm:git:git@github.com:guardian/content-entity.git")),
 
@@ -32,6 +33,7 @@ val commonSettings = Seq(
     inquireVersions,
     runClean,
     runTest,
+    releaseStepTask(scroogeTypescriptCompile),
     setReleaseVersion,
     commitReleaseVersion,
     tagRelease,
@@ -53,6 +55,7 @@ lazy val root = (project in file("."))
 lazy val scalaClasses = (project in file("scala"))
   .settings(commonSettings)
   .settings(
+    publishArtifact := false,
     name := "content-entity-model",
     description := "Scala library built from Content-entity thrift definition",
 
@@ -63,7 +66,7 @@ lazy val scalaClasses = (project in file("scala"))
 
     libraryDependencies ++= Seq(
       "org.apache.thrift" % "libthrift" % "0.13.0",
-      "com.twitter" %% "scrooge-core" % "20.4.0",
+      "com.twitter" %% "scrooge-core" % "20.4.1",
       "org.scalacheck" %% "scalacheck" % "1.14.0" % "test"
     )
   )
@@ -78,4 +81,21 @@ lazy val thrift = (project in file("thrift"))
     publishArtifact in packageDoc := false,
     publishArtifact in packageSrc := false,
     unmanagedResourceDirectories in Compile += { baseDirectory.value / "src/main/thrift" }
+  )
+
+lazy val typescriptClasses = (project in file("ts"))
+  .enablePlugins(ScroogeTypescriptGen)
+  .settings(commonSettings)
+  .settings(
+    publishArtifact := false,
+    name := "content-entity-typescript",
+    scroogeTypescriptNpmPackageName := "@guardian/content-entity-model",
+    Compile / scroogeDefaultJavaNamespace := scroogeTypescriptNpmPackageName.value,
+    Test / scroogeDefaultJavaNamespace := scroogeTypescriptNpmPackageName.value,
+    description := "Typescript library built from Content-entity thrift definition",
+
+    Compile / scroogeLanguages := Seq("typescript"),
+    scroogeThriftSourceFolder in Compile := baseDirectory.value / "../thrift/src/main/thrift",
+    scroogeTypescriptPackageLicense := "Apache-2.0",
+    scroogeTypescriptDryRun := true,
   )

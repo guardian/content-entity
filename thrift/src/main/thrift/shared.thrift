@@ -1,5 +1,6 @@
 namespace java com.gu.contententity.thrift
 #@namespace scala com.gu.contententity.thrift
+#@namespace typescript _at_guardian.content_entity_model
 
 /** date times are reprsented as i64 - epoch millis */
 typedef i64 DateTime

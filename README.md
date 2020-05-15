@@ -8,8 +8,16 @@ languages.
 
 ## How to release
 
-```
-$ sbt release cross
+Ensure you have the following installed on your machine:
+ - `tsc` (`brew install typescript`)
+ - `npm` (not sure! there are so many ways to install it)
+ 
+Ensure you have an NPM account, part of the [@guardian](https://www.npmjs.com/org/guardian) org with a [configured token](https://docs.npmjs.com/creating-and-viewing-authentication-tokens)
+
+```sbtshell
+release // will release the scala / thrift projects
+project typescriptClasses
+release 1.0.0 // you have to specify the version again
 ```
 
 This will release 2 artifacts to Maven Central:
@@ -17,31 +25,7 @@ This will release 2 artifacts to Maven Central:
 * `content-entity-model_2.13-$version.jar` contains the Thrift files and Scrooge-generated Scala 2.13 classes
 * `content-entity-model-thrift-$version.jar` contains only the Thrift files
 
-The package is cross-built against Scala 2.12 and 2.11
-
+The package is cross-built against Scala 2.13, 2.12 and 2.11
 You will need a PGP key and Sonatype credentials.  
 
-### JavaScript
-
-The JS library should be published to npmjs, see:
-
-https://www.npmjs.com/package/publish
-
-and `npm help publish`.
-
-If you're unfamiliar with publishing on npm the following commands can be useful:
-
-* `npm whoami` - to find out your username (if you have created one)
-* `npm adduser` - to create a user
-* `npm owner ls` - to check the owners of content-entity.
-* `npm owner add <username>` - to add a new owner allowing them to publish content-entity.
-
-But in summary:
-
-1. Bump the version number in `package.json`
-
-2. Make sure you have built the latest version of the JS library with `sbt compile`
-
-3. If you've added another type, be sure to add it to `js/main.js`
-
-4. Then, `npm publish` in the same directory as `package.json`
+This will also release the js/typescript package on NPM.
