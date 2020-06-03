@@ -33,7 +33,6 @@ val commonSettings = Seq(
     inquireVersions,
     runClean,
     runTest,
-    releaseStepTask(scroogeTypescriptCompile),
     setReleaseVersion,
     commitReleaseVersion,
     tagRelease,
