@@ -55,7 +55,6 @@ lazy val root = (project in file("."))
 lazy val scalaClasses = (project in file("scala"))
   .settings(commonSettings)
   .settings(
-    publishArtifact := false,
     name := "content-entity-model",
     description := "Scala library built from Content-entity thrift definition",
 
