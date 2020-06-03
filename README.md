@@ -17,7 +17,7 @@ Ensure you have an NPM account, part of the [@guardian](https://www.npmjs.com/or
 ```sbtshell
 release // will release the scala / thrift projects
 project typescriptClasses
-release 1.0.0 // you have to specify the version again
+releaseNpm 1.0.0 // you have to specify the version again
 ```
 
 This will release 2 artifacts to Maven Central:
