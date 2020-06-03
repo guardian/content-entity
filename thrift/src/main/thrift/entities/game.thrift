@@ -1,4 +1,5 @@
 namespace java com.gu.contententity.thrift.entity.game
+#@namespace typescript _at_guardian.content_entity_model.game
 
 include "../shared.thrift"
 

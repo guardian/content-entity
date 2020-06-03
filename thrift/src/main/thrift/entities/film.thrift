@@ -1,4 +1,5 @@
 namespace java com.gu.contententity.thrift.entity.film
+#@namespace typescript _at_guardian.content_entity_model.film
 
 include "./person.thrift"
 
