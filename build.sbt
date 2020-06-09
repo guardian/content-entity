@@ -94,6 +94,5 @@ lazy val typescriptClasses = (project in file("ts"))
 
     Compile / scroogeLanguages := Seq("typescript"),
     scroogeThriftSourceFolder in Compile := baseDirectory.value / "../thrift/src/main/thrift",
-    scroogeTypescriptPackageLicense := "Apache-2.0",
-    scroogeTypescriptDryRun := true
+    scroogeTypescriptPackageLicense := "Apache-2.0"
   )
