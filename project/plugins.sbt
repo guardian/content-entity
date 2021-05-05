@@ -1,4 +1,4 @@
-addSbtPlugin("com.gu" % "sbt-scrooge-typescript" % "1.2.7-RC1")
+addSbtPlugin("com.gu" % "sbt-scrooge-typescript" % "1.3.0")
 
 addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.13")
 
