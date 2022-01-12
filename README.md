@@ -25,7 +25,8 @@ This will release 2 artifacts to Maven Central:
 * `content-entity-model_2.13-$version.jar` contains the Thrift files and Scrooge-generated Scala 2.13 classes
 * `content-entity-model-thrift-$version.jar` contains only the Thrift files
 
-The package is cross-built against Scala 2.13, 2.12 and 2.11
+The package is cross-built against Scala 2.13 and 2.12. Support for Scala 2.11 ended with Scrooge 21.3.0.
+
 You will need a PGP key and Sonatype credentials.  
 
 This will also release the js/typescript package on NPM.

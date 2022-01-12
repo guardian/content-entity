@@ -1,10 +1,15 @@
 import sbtrelease._
 import ReleaseStateTransformations._
 
+val scroogeVersion = "21.12.0"
+val thriftVersion = "0.15.0"
+
 val commonSettings = Seq(
   organization := "com.gu",
   scalaVersion := "2.13.2",
-  crossScalaVersions := Seq("2.11.12", "2.12.11", "2.13.2"),
+  // scrooge 21.3.0: Builds are now only supported for Scala 2.12+
+  // https://twitter.github.io/scrooge/changelog.html#id11
+  crossScalaVersions := Seq("2.12.11", scalaVersion.value),
   releaseCrossBuild := true,
   scmInfo := Some(ScmInfo(url("https://github.com/guardian/content-entity"),
                           "scm:git:git@github.com:guardian/content-entity.git")),
@@ -21,6 +26,11 @@ val commonSettings = Seq(
       <id>tomrf1</id>
       <name>Tom Forbes</name>
       <url>https://github.com/tomrf1</url>
+    </developer>
+    <developer>
+      <id>justinpinner</id>
+      <name>Justin Pinner</name>
+      <url>https://github.com/justinpinner</url>
     </developer>
   </developers>
   ),
@@ -57,14 +67,14 @@ lazy val scalaClasses = (project in file("scala"))
     name := "content-entity-model",
     description := "Scala library built from Content-entity thrift definition",
 
-    scroogeThriftSourceFolder in Compile := baseDirectory.value / "../thrift/src/main/thrift",
-    scroogeThriftOutputFolder in Compile := sourceManaged.value,
-    scroogePublishThrift in Compile := true,
-    managedSourceDirectories in Compile += (scroogeThriftOutputFolder in Compile).value,
+    Compile / scroogeThriftSourceFolder := baseDirectory.value / "../thrift/src/main/thrift",
+    Compile / scroogeThriftOutputFolder := sourceManaged.value,
+    Compile / scroogePublishThrift := true,
+    Compile / managedSourceDirectories += (Compile / scroogeThriftOutputFolder).value,
 
     libraryDependencies ++= Seq(
-      "org.apache.thrift" % "libthrift" % "0.13.0",
-      "com.twitter" %% "scrooge-core" % "20.4.1",
+      "org.apache.thrift" % "libthrift" % thriftVersion,
+      "com.twitter" %% "scrooge-core" % scroogeVersion,
       "org.scalacheck" %% "scalacheck" % "1.14.0" % "test"
     )
   )
@@ -76,9 +86,9 @@ lazy val thrift = (project in file("thrift"))
     name := "content-entity-thrift",
     description := "Content entity model Thrift files",
     crossPaths := false,
-    publishArtifact in packageDoc := false,
-    publishArtifact in packageSrc := false,
-    unmanagedResourceDirectories in Compile += { baseDirectory.value / "src/main/thrift" }
+    packageDoc / publishArtifact := false,
+    packageSrc / publishArtifact := false,
+    Compile / unmanagedResourceDirectories += { baseDirectory.value / "src/main/thrift" }
   )
 
 lazy val typescriptClasses = (project in file("ts"))
@@ -93,6 +103,6 @@ lazy val typescriptClasses = (project in file("ts"))
     description := "Typescript library built from Content-entity thrift definition",
 
     Compile / scroogeLanguages := Seq("typescript"),
-    scroogeThriftSourceFolder in Compile := baseDirectory.value / "../thrift/src/main/thrift",
+    Compile / scroogeThriftSourceFolder := baseDirectory.value / "../thrift/src/main/thrift",
     scroogeTypescriptPackageLicense := "Apache-2.0"
   )
