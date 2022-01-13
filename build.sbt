@@ -38,7 +38,7 @@ lazy val mavenSettings = Seq(
       </developers>
     ),
   licenses := Seq("Apache V2" -> url("http://www.apache.org/licenses/LICENSE-2.0.html")),
-  publishTo := sonatypePublishTo.value,
+  publishTo := sonatypePublishToBundle.value,
   publishConfiguration := publishConfiguration.value.withOverwrite(true)
 )
 
@@ -70,8 +70,8 @@ lazy val releaseProcessSteps: Seq[ReleaseStep] = {
     tagRelease,
     publishArtifacts,
     setNextVersion,
-    releaseStepCommand("publishSigned"),  // consider releaseStepCommandAndRemaining +publishSigned?
-    releaseStepCommand("sonatypeRelease"),
+    releaseStepCommandAndRemaining("+publishSigned"),
+    releaseStepCommand("sonatypeBundleRelease"),
     commitNextVersion
   )
 
@@ -89,8 +89,8 @@ lazy val releaseProcessSteps: Seq[ReleaseStep] = {
   */
   val candidateSteps: Seq[ReleaseStep] = Seq(
     setReleaseVersion,
-    releaseStepCommand("publishSigned"),  // consider releaseStepCommandAndRemaining +publishSigned?
-    releaseStepCommand("sonatypeRelease"),
+    releaseStepCommandAndRemaining("+publishSigned"),
+    releaseStepCommand("sonatypeBundleRelease"),
     setNextVersion
   )
 
