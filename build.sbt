@@ -72,7 +72,8 @@ lazy val releaseProcessSteps: Seq[ReleaseStep] = {
     releaseStepCommandAndRemaining("+publishSigned"),
     releaseStepCommand("sonatypeBundleRelease"),
     setNextVersion,
-    commitNextVersion
+    commitNextVersion,
+    pushChanges
   )
 
   /*
