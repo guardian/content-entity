@@ -3,3 +3,4 @@ npm-debug.log
 generated
 target/
 .idea/
+.bsp/
