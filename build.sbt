@@ -17,6 +17,7 @@ val artifactProductionSettings = Seq(
   releaseCrossBuild := true,
   scalacOptions ++= Seq("-release:11"),// do we need these as well? - ("-feature", "-deprecation", "-unchecked", "-Xfatal-warnings")
   licenses := Seq(License.Apache2),
+  Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-u", s"test-results/scala-${scalaVersion.value}", "-o")
 )
 
 lazy val root = (project in file("."))
