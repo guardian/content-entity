@@ -5,8 +5,6 @@ import sbtversionpolicy.withsbtrelease.ReleaseVersion
 
 val scroogeVersion = "22.1.0"
 val thriftVersion = "0.19.0"
-val betaReleaseType = "beta"
-val betaReleaseSuffix = "-beta.0"
 
 val artifactProductionSettings = Seq(
   organization := "com.gu",
@@ -15,7 +13,7 @@ val artifactProductionSettings = Seq(
   // https://twitter.github.io/scrooge/changelog.html#id11
   crossScalaVersions := Seq("2.12.18", scalaVersion.value),
   releaseCrossBuild := true,
-  scalacOptions ++= Seq("-release:11"),// do we need these as well? - ("-feature", "-deprecation", "-unchecked", "-Xfatal-warnings")
+  scalacOptions ++= Seq("-release:11"),// going ahead with release option only. We might add more options if any implementation comes in future :  ("-feature", "-deprecation", "-unchecked", "-Xfatal-warnings")
   licenses := Seq(License.Apache2),
   Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-u", s"test-results/scala-${scalaVersion.value}", "-o")
 )
@@ -63,26 +61,15 @@ lazy val thrift = (project in file("thrift"))
     name := "content-entity-thrift",
     description := "Content entity model Thrift files",
     crossPaths := false,
-    packageDoc / publishArtifact := false, //do we need to remove this? also because if root is using "publish / skip := true" instead?
-    packageSrc / publishArtifact := false, //do we need to remove this? also because if root is using "publish / skip := true" instead?
+    publish / skip := true,
     Compile / unmanagedResourceDirectories += { baseDirectory.value / "src/main/thrift" }
   )
-
-lazy val npmBetaReleaseTagMaybe =
-  sys.props.get("RELEASE_TYPE").map {
-    case v if v == betaReleaseType =>
-      // Why hard-code "beta" instead of using the value of the variable? That's to ensure it's always presented as
-      // --tag beta to the npm release process provided by the ScroogeTypescriptGen plugin regardless of how we identify
-      // a beta release here
-      scroogeTypescriptPublishTag := "beta"
-  }.toSeq
 
 lazy val typescriptClasses = (project in file("ts"))
   .enablePlugins(ScroogeTypescriptGen)
   .settings(artifactProductionSettings)
-  .settings(npmBetaReleaseTagMaybe)//do we need to remove this?
   .settings(
-    publishArtifact := false, //do we need to remove this? also because if root is using "publish / skip := true" instead?
+    publish / skip := true,
     name := "content-entity-typescript",
     scroogeTypescriptNpmPackageName := "@guardian/content-entity-model",
     Compile / scroogeDefaultJavaNamespace := scroogeTypescriptNpmPackageName.value,
