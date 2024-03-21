@@ -61,7 +61,8 @@ lazy val thrift = (project in file("thrift"))
     name := "content-entity-thrift",
     description := "Content entity model Thrift files",
     crossPaths := false,
-    publish / skip := true,
+    packageDoc / publishArtifact := false,
+    packageSrc / publishArtifact := false,
     Compile / unmanagedResourceDirectories += { baseDirectory.value / "src/main/thrift" }
   )
 
