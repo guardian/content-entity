@@ -3,15 +3,15 @@ import ReleaseStateTransformations._
 import sbtrelease.ReleaseStateTransformations._
 import sbtversionpolicy.withsbtrelease.ReleaseVersion
 
-val scroogeVersion = "22.1.0"
+val scroogeVersion = "22.12.0"
 val thriftVersion = "0.20.0"
 
 val artifactProductionSettings = Seq(
   organization := "com.gu",
-  scalaVersion := "2.13.12",
+  scalaVersion := "2.13.14",
   // scrooge 21.3.0: Builds are now only supported for Scala 2.12+
   // https://twitter.github.io/scrooge/changelog.html#id11
-  crossScalaVersions := Seq("2.12.18", scalaVersion.value),
+  crossScalaVersions := Seq("2.12.20", scalaVersion.value),
   scalacOptions ++= Seq("-release:11"),// going ahead with release option only. We might add more options if any implementation comes in future :  ("-feature", "-deprecation", "-unchecked", "-Xfatal-warnings")
   licenses := Seq(License.Apache2),
   Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-u", s"test-results/scala-${scalaVersion.value}", "-o")
@@ -50,7 +50,7 @@ lazy val scalaClasses = (project in file("scala"))
     libraryDependencies ++= Seq(
       "org.apache.thrift" % "libthrift" % thriftVersion,
       "com.twitter" %% "scrooge-core" % scroogeVersion,
-      "org.scalacheck" %% "scalacheck" % "1.17.0" % "test"
+      "org.scalacheck" %% "scalacheck" % "1.17.1" % "test"
     )
   )
 
