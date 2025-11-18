@@ -4,7 +4,7 @@ import sbtrelease.ReleaseStateTransformations._
 import sbtversionpolicy.withsbtrelease.ReleaseVersion
 
 val scroogeVersion = "22.1.0"
-val thriftVersion = "0.20.0"
+val thriftVersion = "0.22.0"
 
 val artifactProductionSettings = Seq(
   organization := "com.gu",
