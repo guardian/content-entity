@@ -50,7 +50,7 @@ lazy val scalaClasses = (project in file("scala"))
     libraryDependencies ++= Seq(
       "org.apache.thrift" % "libthrift" % thriftVersion,
       "com.twitter" %% "scrooge-core" % scroogeVersion,
-      "org.scalacheck" %% "scalacheck" % "1.17.0" % "test"
+      "org.scalacheck" %% "scalacheck" % "1.17.1" % "test"
     )
   )
 
