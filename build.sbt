@@ -3,7 +3,7 @@ import ReleaseStateTransformations._
 import sbtrelease.ReleaseStateTransformations._
 import sbtversionpolicy.withsbtrelease.ReleaseVersion
 
-val scroogeVersion = "22.1.0"
+val scroogeVersion = "22.12.0"
 val thriftVersion = "0.20.0"
 
 val artifactProductionSettings = Seq(
