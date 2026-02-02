@@ -79,5 +79,6 @@ lazy val typescriptClasses = (project in file("ts"))
     description := "Typescript library built from Content-entity thrift definition",
     Compile / scroogeLanguages := Seq("typescript"),
     Compile / scroogeThriftSourceFolder := baseDirectory.value / "../thrift/src/main/thrift",
-    scroogeTypescriptPackageLicense := "Apache-2.0"
+    scroogeTypescriptPackageLicense := "Apache-2.0",
+    scroogeTypescriptPublishTag := "prerelease"
   )
