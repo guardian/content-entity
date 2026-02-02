@@ -15,10 +15,12 @@ jobs:
     name: NPM Release
     needs: scala-maven-release
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: sbt/setup-sbt@v1.1.0
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
           registry-url: https://registry.npmjs.org
@@ -26,5 +28,4 @@ jobs:
         run: |
           sbt "project typescriptClasses" "releaseNpm ${{ needs.scala-maven-release.outputs.RELEASE_VERSION }}"
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           RELEASE_TYPE: ${{ needs.scala-maven-release.outputs.RELEASE_TYPE }}
