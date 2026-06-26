@@ -24,7 +24,8 @@ lazy val root = (project in file("."))
   .aggregate(thrift, scalaClasses, json)
   .settings(
     publish / skip := true,
-    releaseVersion := ReleaseVersion.fromAggregatedAssessedCompatibilityWithLatestRelease().value,
+    // TODO temporarily disabled for first release of json module. Reenable after first release
+    // releaseVersion := ReleaseVersion.fromAggregatedAssessedCompatibilityWithLatestRelease().value,
     releaseCrossBuild := true,
     releaseProcess := Seq[ReleaseStep](
       checkSnapshotDependencies,
