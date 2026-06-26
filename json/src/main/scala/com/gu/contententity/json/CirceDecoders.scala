@@ -6,7 +6,7 @@ import com.gu.contententity.thrift.entity.organisation.Organisation
 import com.gu.contententity.thrift.entity.person.Person
 import com.gu.contententity.thrift.entity.place.Place
 import com.gu.contententity.thrift.entity.restaurant.Restaurant
-import com.gu.contententity.thrift.{Address, EntityType, Geolocation, Price}
+import com.gu.contententity.thrift._
 import com.gu.fezziwig.CirceScroogeMacros._
 import com.gu.fezziwig.CirceScroogeWhiteboxMacros._
 import io.circe.Decoder
@@ -20,9 +20,10 @@ object CirceDecoders {
   implicit lazy val placeDecoder: Decoder[Place] = deriveDecoder
   implicit lazy val restaurantDecoder: Decoder[Restaurant] = deriveDecoder
 
-  implicit lazy val entityTypeDecoder: Decoder[EntityType] = deriveDecoder
-
   implicit lazy val addressDecoder: Decoder[Address] = deriveDecoder
   implicit lazy val geolocationDecoder: Decoder[Geolocation] = deriveDecoder
   implicit lazy val priceDecoder: Decoder[Price] = deriveDecoder
+
+  implicit lazy val entityTypeDecoder: Decoder[EntityType] = deriveDecoder
+  implicit lazy val entityDecoder: Decoder[Entity] = deriveDecoder
 }
