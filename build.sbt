@@ -1,15 +1,16 @@
 import sbtrelease._
 import ReleaseStateTransformations._
-import sbtrelease.ReleaseStateTransformations._
 import sbtversionpolicy.withsbtrelease.ReleaseVersion
 
 val scroogeVersion = "22.1.0"
 val thriftVersion = "0.20.0"
+val fezziwigVersion = "2.0.1"
+val circeVersion = "0.14.16"
 
 val artifactProductionSettings = Seq(
   organization := "com.gu",
   scmInfo := Some(ScmInfo(url("https://github.com/guardian/content-entity"), "scm:git@github.com:guardian/content-entity.git")),
-  scalaVersion := "2.13.12",
+  scalaVersion := "2.13.18",
   // scrooge 21.3.0: Builds are now only supported for Scala 2.12+
   // https://twitter.github.io/scrooge/changelog.html#id11
   crossScalaVersions := Seq("2.12.18", scalaVersion.value),
@@ -20,10 +21,11 @@ val artifactProductionSettings = Seq(
 
 lazy val root = (project in file("."))
   .settings(artifactProductionSettings)
-  .aggregate(thrift, scalaClasses)
+  .aggregate(thrift, scalaClasses, json)
   .settings(
     publish / skip := true,
-    releaseVersion := ReleaseVersion.fromAggregatedAssessedCompatibilityWithLatestRelease().value,
+    // TODO temporarily disabled for first release of json module. Reenable after first release
+    // releaseVersion := ReleaseVersion.fromAggregatedAssessedCompatibilityWithLatestRelease().value,
     releaseCrossBuild := true,
     releaseProcess := Seq[ReleaseStep](
       checkSnapshotDependencies,
@@ -65,6 +67,21 @@ lazy val thrift = (project in file("thrift"))
     packageDoc / publishArtifact := false,
     packageSrc / publishArtifact := false,
     Compile / unmanagedResourceDirectories += { baseDirectory.value / "src/main/thrift" }
+  )
+
+lazy val json = (project in file("json"))
+  .settings(artifactProductionSettings)
+  .dependsOn(scalaClasses)
+  .disablePlugins(ScroogeSBT)
+  .settings(
+    name := "content-entity-model-json",
+    description := "Circe json encoders and decoders for content entity model",
+    libraryDependencies ++= Seq(
+      "com.gu" %% "fezziwig" % fezziwigVersion,
+      "io.circe" %% "circe-core" % circeVersion,
+      "io.circe" %% "circe-generic" % circeVersion,
+      "io.circe" %% "circe-parser" % circeVersion,
+    )
   )
 
 lazy val typescriptClasses = (project in file("ts"))
