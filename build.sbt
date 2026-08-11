@@ -9,7 +9,7 @@ val thriftVersion = "0.20.0"
 val artifactProductionSettings = Seq(
   organization := "com.gu",
   scmInfo := Some(ScmInfo(url("https://github.com/guardian/content-entity"), "scm:git@github.com:guardian/content-entity.git")),
-  scalaVersion := "2.13.12",
+  scalaVersion := "2.13.18",
   // scrooge 21.3.0: Builds are now only supported for Scala 2.12+
   // https://twitter.github.io/scrooge/changelog.html#id11
   crossScalaVersions := Seq("2.12.21", scalaVersion.value),
