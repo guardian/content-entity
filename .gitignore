@@ -5,3 +5,8 @@ target/
 .idea/
 .bsp/
 .carabiner/
+/.bloop/
+/.metals/
+/project/.bloop/
+/project/metals.sbt
+/project/project/
